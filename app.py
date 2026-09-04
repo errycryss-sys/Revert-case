@@ -41,7 +41,7 @@ try:
     worksheet = sh.worksheet("Revert case")
     st.success("✅ Connected to Google Sheet!")
 except Exception as e:
-    st.error("❌ Connection Error: Please check your Google Sheet name and Streamlit secrets.")
+    st.error(f"❌ Real Error: {e}")
 
 # Session State Initialization
 if "tracking" not in st.session_state:
