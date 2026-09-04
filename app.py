@@ -61,7 +61,7 @@ if "duration_sec" not in st.session_state:
 # Agent Input Form
 col1, col2 = st.columns(2)
 with col1:
-    agent_list = [
+        agent_list = [
             "- Select Your Name -",
             "Adam",
             "Aina",
@@ -77,8 +77,8 @@ with col1:
             "Venosha"
         ]
         selected_agent = st.selectbox(
-            "Agent Name", 
-            agent_list, 
+            "Agent Name",
+            agent_list,
             disabled=st.session_state.tracking or st.session_state.completed
         )
         agent_name = selected_agent if selected_agent != "- Select Your Name -" else ""
