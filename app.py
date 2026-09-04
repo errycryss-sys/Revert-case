@@ -77,14 +77,14 @@ with col_btn1:
             st.warning("⚠️ Please enter Agent Name and Case ID first!")
         else:
             st.session_state.start_time = time.time()
-            st.session_state.start_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            st.session_state.start_str = datetime.now().strftime("%d/%m/%Y %I:%M %p")
             st.session_state.tracking = True
             st.rerun()
 
 with col_btn2:
     if st.button("⏹️ COMPLETE CASE", type="secondary", use_container_width=True, disabled=not st.session_state.tracking):
         end_time = time.time()
-        st.session_state.end_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        st.session_state.end_str = datetime.now().strftime("%d/%m/%Y %I:%M %p")
         st.session_state.duration_sec = int(end_time - st.session_state.start_time)
         
         minutes, seconds = divmod(st.session_state.duration_sec, 60)
