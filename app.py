@@ -7,7 +7,7 @@ from datetime import datetime, timedelta, timezone
 # Page Configuration
 st.set_page_config(page_title="AGENT REVERT CASE LOG", page_icon="⏱️", layout="centered")
 
-# Custom CSS for EXACT Original Layout, Banner & Buttons
+# Custom CSS for EXACT Original Layout, Banner & FULL RED BUTTON
 st.markdown("""
     <style>
     /* Header Container - Dark Blue Card */
@@ -31,22 +31,28 @@ st.markdown("""
         font-size: 14px;
         margin: 0;
     }
-    /* Red Submit Button */
-    div.stButton > button[data-testid="baseButton-secondary"] {
+    
+    /* Global Button Base */
+    .stButton button { 
+        width: 100% !important; 
+        border-radius: 8px !important; 
+        font-weight: bold !important; 
+        height: 3em !important;
+    }
+
+    /* Force RED Submit Button Everywhere */
+    div[data-testid="stFormSubmitButton"] > button,
+    div.stButton > button[kind="secondary"] {
         background-color: #ff4d4d !important;
         color: white !important;
         border: none !important;
-        font-weight: bold !important;
-        border-radius: 8px !important;
-        height: 3em !important;
-        width: 100% !important;
+        font-size: 16px !important;
     }
-    /* Standard Full Width Controls Buttons */
-    .stButton button { 
-        width: 100%; 
-        border-radius: 8px; 
-        font-weight: bold; 
-        height: 3em;
+    
+    div[data-testid="stFormSubmitButton"] > button:hover,
+    div.stButton > button[kind="secondary"]:hover {
+        background-color: #ff3333 !important;
+        color: white !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -178,7 +184,7 @@ if st.session_state.tracking:
     else:
         st.info(f"⏳ **Tracking Case ID: {case_id}** (Started at: {st.session_state.start_str})")
 
-# Completion Details Form (Remarks Only, Without Return Reason)
+# Completion Details Form (Remarks Only)
 if st.session_state.completed:
     # Format Duration without seconds (HH:MM)
     m, _ = divmod(st.session_state.duration_sec, 60)
@@ -192,8 +198,8 @@ if st.session_state.completed:
         placeholder="Summarize any delays or issues faced (e.g., Hard to validate evidence / Unclear SOP / Complex case / Waiting for seller response / System lag)..."
     )
     
-    # Red Submit Button matching original design
-    if st.button("🚀 SUBMIT TO SHEET", type="secondary"):
+    # Red Submit Button (Forced Red Styling)
+    if st.button("🚀 SUBMIT TO SHEET", type="secondary", use_container_width=True):
         try:
             pm, _ = divmod(st.session_state.total_paused_sec, 60)
             ph, pm = divmod(pm, 60)
@@ -223,7 +229,7 @@ if st.session_state.completed:
             st.session_state.completed = False
             st.session_state.total_paused_sec = 0
             
-            # Delay 2.5s to let balloons complete floating before refresh
+            # Delay 2.5s for balloons to float before refresh
             time.sleep(2.5)
             st.rerun()
             
