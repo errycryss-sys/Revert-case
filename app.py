@@ -61,7 +61,27 @@ if "duration_sec" not in st.session_state:
 # Agent Input Form
 col1, col2 = st.columns(2)
 with col1:
-    agent_name = st.text_input("Agent Name", placeholder="e.g. Didi", disabled=st.session_state.tracking or st.session_state.completed)
+    agent_list = [
+            "- Select Your Name -",
+            "Adam",
+            "Aina",
+            "Farhana",
+            "Faris",
+            "Hani",
+            "Hidayah",
+            "Kieshan",
+            "Maisarah",
+            "Milah",
+            "Mivan",
+            "Noor",
+            "Venosha"
+        ]
+        selected_agent = st.selectbox(
+            "Agent Name", 
+            agent_list, 
+            disabled=st.session_state.tracking or st.session_state.completed
+        )
+        agent_name = selected_agent if selected_agent != "- Select Your Name -" else ""
 with col2:
     case_id = st.text_input("Case ID", placeholder="e.g. 2000", disabled=st.session_state.tracking or st.session_state.completed)
 
