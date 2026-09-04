@@ -7,10 +7,10 @@ from datetime import datetime, timedelta, timezone
 # Page Configuration
 st.set_page_config(page_title="AGENT REVERT CASE LOG", page_icon="⏱️", layout="centered")
 
-# Custom CSS for EXACT Original Layout & Colors
+# Custom CSS for EXACT Original Layout, Banner & Buttons
 st.markdown("""
     <style>
-    /* Header Container */
+    /* Header Container - Dark Blue Card */
     .header-box {
         background-color: #2b549a;
         padding: 25px;
@@ -24,6 +24,7 @@ st.markdown("""
         font-weight: 800;
         letter-spacing: 1px;
         margin-bottom: 5px;
+        font-size: 2rem;
     }
     .header-box p {
         color: #e0e6ed;
@@ -40,7 +41,7 @@ st.markdown("""
         height: 3em !important;
         width: 100% !important;
     }
-    /* Standard Full Width Buttons */
+    /* Standard Full Width Controls Buttons */
     .stButton button { 
         width: 100%; 
         border-radius: 8px; 
@@ -97,7 +98,7 @@ if 'completed' not in st.session_state:
 st.markdown("""
     <div class="header-box">
         <h1>⏱️ AGENT REVERT CASE LOG</h1>
-        <p>Start case ➔ Pause (If needed) ➔ Complete case ➔ Log Summary</p>
+        <p>Start case ➔ Complete case ➔ Log Summary</p>
     </div>
 """, unsafe_allow_html=True)
 
@@ -125,7 +126,7 @@ with col2:
 
 st.markdown("---")
 
-# Controls Section (3 Columns for Start, Pause, Complete)
+# Controls Section (Start, Pause, Complete)
 col_btn1, col_btn2, col_btn3 = st.columns(3)
 
 with col_btn1:
@@ -177,9 +178,9 @@ if st.session_state.tracking:
     else:
         st.info(f"⏳ **Tracking Case ID: {case_id}** (Started at: {st.session_state.start_str})")
 
-# Completion Details Form
+# Completion Details Form (Remarks Only, Without Return Reason)
 if st.session_state.completed:
-    # Format Duration without seconds (JAM:MINIT)
+    # Format Duration without seconds (HH:MM)
     m, _ = divmod(st.session_state.duration_sec, 60)
     h, m = divmod(m, 60)
     formatted_duration = f"{h:02d}:{m:02d}"
@@ -191,7 +192,7 @@ if st.session_state.completed:
         placeholder="Summarize any delays or issues faced (e.g., Hard to validate evidence / Unclear SOP / Complex case / Waiting for seller response / System lag)..."
     )
     
-    # Red Submit Button
+    # Red Submit Button matching original design
     if st.button("🚀 SUBMIT TO SHEET", type="secondary"):
         try:
             pm, _ = divmod(st.session_state.total_paused_sec, 60)
@@ -212,17 +213,17 @@ if st.session_state.completed:
             
             sheet.append_row(row_data)
             
-            # Show Balloons!
+            # Show Balloons Animation!
             st.balloons()
             st.success("✅ Saved to Google Sheet successfully!")
             
-            # Reset State
+            # Reset Session State
             st.session_state.tracking = False
             st.session_state.paused = False
             st.session_state.completed = False
             st.session_state.total_paused_sec = 0
             
-            # Wait 2.5s for balloons to float before refresh
+            # Delay 2.5s to let balloons complete floating before refresh
             time.sleep(2.5)
             st.rerun()
             
