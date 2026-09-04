@@ -22,9 +22,9 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown("""
-    <div class="main-header">
-        <h2 style="color: white; margin: 0;">⏱️ AGENT CASE TRACKER & ISSUE LOG</h2>
-        <p style="margin-top: 5px; opacity: 0.9;">Start case ➔ Complete case ➔ Select Return Reason & Log Delay Summary</p>
+    <div style="background-color: #2b5497; padding: 20px; border-radius: 10px; text-align: center; color: white;">
+        <h1>⏱️ AGENT REVERT CASE LOG</h1>
+        <p>Start case ➔ Complete case ➔ Select Return Reason & Log Summary</p>
     </div>
 """, unsafe_allow_html=True)
 
