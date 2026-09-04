@@ -37,7 +37,7 @@ def get_gspread_client():
 
 try:
     gc = get_gspread_client()
-    sh = gc.open("Agent Case Time Tracker")
+    sh = gc.open("Revert-case")
     worksheet = sh.sheet1
     st.success("✅ Connected to Google Sheet!")
 except Exception as e:
