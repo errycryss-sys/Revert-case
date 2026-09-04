@@ -20,9 +20,13 @@ st.markdown("""
 @st.cache_resource
 def init_gspread():
     creds_dict = st.secrets["gcp_service_account"]
+    scopes = [
+        "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/drive"
+    ]
     credentials = Credentials.from_service_account_info(
         creds_dict,
-        scopes=["https://www.googleapis.com/auth/spreadsheets"]
+        scopes=scopes
     )
     client = gspread.authorize(credentials)
     return client
