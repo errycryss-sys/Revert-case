@@ -37,8 +37,8 @@ def get_gspread_client():
 
 try:
     gc = get_gspread_client()
-    sh = gc.open("Revert-case")
-    worksheet = sh.sheet1
+    sh = gc.open("Revert case")
+    worksheet = sh.worksheet("Revert case")
     st.success("✅ Connected to Google Sheet!")
 except Exception as e:
     st.error("❌ Connection Error: Please check your Google Sheet name and Streamlit secrets.")
