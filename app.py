@@ -104,7 +104,7 @@ if 'completed' not in st.session_state:
 st.markdown("""
     <div class="header-box">
         <h1>⏱️ AGENT REVERT CASE LOG</h1>
-        <p>Start case ➔ Complete case ➔ Log Summary</p>
+       <p>Start case ➔ Pause (if needed) ➔ Complete case ➔ Log Summary</p>
     </div>
 """, unsafe_allow_html=True)
 
