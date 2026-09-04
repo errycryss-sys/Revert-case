@@ -7,12 +7,22 @@ from datetime import datetime, timedelta, timezone
 # Page Configuration
 st.set_page_config(page_title="Agent Case Tracker", page_icon="⏱️", layout="centered")
 
-# Custom CSS for clean UI
+# Custom CSS for aesthetic & vibrant UI
 st.markdown("""
     <style>
     .main { padding: 2rem; }
-    .stButton button { width: 100%; border-radius: 8px; font-weight: bold; }
-    div[data-testid="stMetricValue"] { font-size: 2rem; }
+    .stButton button { 
+        width: 100%; 
+        border-radius: 10px; 
+        font-weight: bold; 
+        height: 3em;
+    }
+    div[data-testid="stForm"] {
+        border: 2px solid #f0f2f6;
+        border-radius: 15px;
+        padding: 20px;
+        background-color: #fafafa;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -65,18 +75,9 @@ col1, col2 = st.columns(2)
 with col1:
     agent_list = [
         "- Select Your Name -",
-        "Adam",
-        "Aina",
-        "Farhana",
-        "Faris",
-        "Hani",
-        "Hidayah",
-        "Kieshan",
-        "Maisarah",
-        "Milah",
-        "Mivan",
-        "Noor",
-        "Venosha"
+        "Adam", "Aina", "Farhana", "Faris", "Hani", 
+        "Hidayah", "Kieshan", "Maisarah", "Milah", 
+        "Mivan", "Noor", "Venosha"
     ]
     selected_agent = st.selectbox(
         "Agent Name",
@@ -128,7 +129,6 @@ with col_btn3:
         my_tz = timezone(timedelta(hours=8))
         st.session_state.end_str = datetime.now(my_tz).strftime("%d/%m/%Y %I:%M %p")
         
-        # Gross duration minus pause duration
         total_elapsed = int(end_time - st.session_state.start_time)
         st.session_state.duration_sec = max(0, total_elapsed - st.session_state.total_paused_sec)
         
@@ -143,28 +143,25 @@ if st.session_state.tracking:
     else:
         st.info(f"⏳ **Tracking Case ID: {case_id}** (Started at: {st.session_state.start_str})")
 
-# Completion Form (Remark Only)
+# Completion Form
 if st.session_state.completed:
     st.success("🎉 Case Completed! Please fill in the details below:")
     
     with st.form("submit_form"):
         remark = st.text_area("Remark", placeholder="No Remarks / Standard Handling")
-        submit_btn = st.form_submit_button("📤 Submit to Google Sheet")
+        submit_btn = st.form_submit_button("📤 Submit to Google Sheet", type="primary")
         
         if submit_btn:
             try:
-                # Format handling duration
-                m, s = divmod(st.session_state.duration_sec, 60)
+                # Format duration (JAM:MINIT SAHAJA - Tanpa Saat)
+                m, _ = divmod(st.session_state.duration_sec, 60)
                 h, m = divmod(m, 60)
-                formatted_duration = f"{h:02d}:{m:02d}:{s:02d}"
+                formatted_duration = f"{h:02d}:{m:02d}"
 
-                # Format pause duration
-                pm, ps = divmod(st.session_state.total_paused_sec, 60)
+                pm, _ = divmod(st.session_state.total_paused_sec, 60)
                 ph, pm = divmod(pm, 60)
-                formatted_pause = f"{ph:02d}:{pm:02d}:{ps:02d}"
+                formatted_pause = f"{ph:02d}:{pm:02d}"
 
-                # Append data to Google Sheet
-                # Case ID | Agent Name | Start Time | End Time | Pause Duration | Handling Duration (Sec) | Formatted Handling Duration | Status | Remark
                 row_data = [
                     case_id,
                     agent_name,
@@ -178,14 +175,19 @@ if st.session_state.completed:
                 ]
                 
                 sheet.append_row(row_data)
+                
+                # Pop balloons & tunjuk success message
                 st.balloons()
                 st.success("✅ Saved to Google Sheet successfully!")
                 
-                # Reset Session State for next case
+                # Reset Session State
                 st.session_state.tracking = False
                 st.session_state.paused = False
                 st.session_state.completed = False
                 st.session_state.total_paused_sec = 0
+                
+                # Delay 2 saat supaya belon sempat terbang fully!
+                time.sleep(2)
                 st.rerun()
                 
             except Exception as e:
