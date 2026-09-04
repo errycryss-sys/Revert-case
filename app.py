@@ -36,9 +36,8 @@ def get_gspread_client():
     return gspread.authorize(creds)
 
 try:
-    try:
     gc = get_gspread_client()
-    sh = gc.open_by_key("P19uOA-ylddWlcgvV92O3OyUEY9ekqHyoGXoF5-rslyIM")
+    sh = gc.open_by_key("19uOA-ylddWlcgvV9203OyUEY9ekqHyoGXoF5-rslyIM")    
     worksheet = sh.worksheet("Revert case")
     st.success("✅ Connected to Google Sheet!")
 except Exception as e:
