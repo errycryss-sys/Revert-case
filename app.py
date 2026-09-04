@@ -201,9 +201,9 @@ if st.session_state.completed:
     # Red Submit Button
     if st.button("🚀 SUBMIT TO SHEET", type="secondary", use_container_width=True):
         try:
-            pm, _ = divmod(st.session_state.total_paused_sec, 60)
+            pm, ps = divmod(st.session_state.total_paused_sec, 60)
             ph, pm = divmod(pm, 60)
-            formatted_pause = f"{ph:02d}:{pm:02d}"
+            formatted_pause = f"{ph:02d}:{pm:02d}:{ps:02d}"
 
             # Data row ringkas (7 Column)
             row_data = [
