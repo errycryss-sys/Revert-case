@@ -104,7 +104,7 @@ if 'completed' not in st.session_state:
 st.markdown("""
     <div class="header-box">
         <h1>⏱️ AGENT REVERT CASE LOG</h1>
-       <p>Start case ➔ Pause (if needed) ➔ Complete case ➔ Log Summary</p>
+        <p>Start case ➔ Pause (if needed) ➔ Complete case ➔ Log Summary</p>
     </div>
 """, unsafe_allow_html=True)
 
@@ -186,7 +186,7 @@ if st.session_state.tracking:
 
 # Completion Details Form (Remarks Only)
 if st.session_state.completed:
-    # Format Duration without seconds (HH:MM)
+    # Format Duration tanpa saat (Jam:Minit)
     m, _ = divmod(st.session_state.duration_sec, 60)
     h, m = divmod(m, 60)
     formatted_duration = f"{h:02d}:{m:02d}"
@@ -198,21 +198,20 @@ if st.session_state.completed:
         placeholder="Summarize any delays or issues faced (e.g., Hard to validate evidence / Unclear SOP / Complex case / Waiting for seller response / System lag)..."
     )
     
-    # Red Submit Button (Forced Red Styling)
+    # Red Submit Button
     if st.button("🚀 SUBMIT TO SHEET", type="secondary", use_container_width=True):
         try:
             pm, _ = divmod(st.session_state.total_paused_sec, 60)
             ph, pm = divmod(pm, 60)
             formatted_pause = f"{ph:02d}:{pm:02d}"
 
+            # Data row ringkas (7 Column)
             row_data = [
                 case_id,
                 agent_name,
                 st.session_state.start_str,
                 st.session_state.end_str,
                 formatted_pause,
-                st.session_state.duration_sec,
-                formatted_duration,
                 "Completed",
                 remark if remark else "No Remarks"
             ]
