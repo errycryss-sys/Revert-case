@@ -126,7 +126,7 @@ with col1:
         agent_list,
         disabled=st.session_state.tracking or st.session_state.completed
     )
-    agent_name = selected_agent if selected_agent != "- Select Your Name -" else ""
+   agent_name = selected_agent if selected_agent != "- Select Your Name -" else ""
 
 with col2:
     case_id = st.text_input("Case ID", placeholder="e.g. 2000", disabled=st.session_state.tracking or st.session_state.completed)
