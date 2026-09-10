@@ -121,7 +121,7 @@ with col1:
         "Milah", "Mivan", "Noor", "Syahmi", "Syazana",
         "Venosha"
     ]
-    selected_agent = st.selectbox(
+   selected_agent = st.selectbox(
         "Agent Name",
         agent_list,
         disabled=st.session_state.tracking or st.session_state.completed
