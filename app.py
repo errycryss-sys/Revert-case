@@ -114,12 +114,12 @@ if connected:
 # Agent Input Form
 col1, col2 = st.columns(2)
 with col1:
-    agent_list = [
+   agent_list = [
         "- Select Your Name -",
-        "Adam", "Aina", "Farhana", "Faris", "Hani",
-        "Hidayah", "Kieshan", "Maisarah", "Milah",
-        "Mivan", "Noor", "Venosha",
-        "Jaleel", "Azwar", "Syahmi", "Syazana"
+        "Adam", "Aina", "Azwar", "Farhana", "Faris",
+        "Hani", "Hidayah", "Jaleel", "Kieshan", "Maisarah",
+        "Milah", "Mivan", "Noor", "Syahmi", "Syazana",
+        "Venosha"
     ]
     selected_agent = st.selectbox(
         "Agent Name",
