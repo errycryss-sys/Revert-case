@@ -116,9 +116,10 @@ col1, col2 = st.columns(2)
 with col1:
     agent_list = [
         "- Select Your Name -",
-        "Adam", "Aina", "Farhana", "Faris", "Hani", 
-        "Hidayah", "Kieshan", "Maisarah", "Milah", 
-        "Mivan", "Noor", "Venosha"
+        "Adam", "Aina", "Farhana", "Faris", "Hani",
+        "Hidayah", "Kieshan", "Maisarah", "Milah",
+        "Mivan", "Noor", "Venosha",
+        "Jaleel", "Azwar", "Syahmi", "Syazana"
     ]
     selected_agent = st.selectbox(
         "Agent Name",
