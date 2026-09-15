@@ -235,7 +235,7 @@ if st.session_state.completed:
             
         except Exception as e:
             st.error(f"Error saving to Google Sheet: {e}")
-
+'''
 # ==========================================
 # REVERT CASE INSIGHT DASHBOARD SECTION
 # ==========================================
@@ -289,3 +289,4 @@ if uploaded_file:
   # 3. Preview Data Table
   st.subheader("📋 Case Remarks Breakdown")
   st.dataframe(df)
+'''
