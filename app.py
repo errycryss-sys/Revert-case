@@ -74,7 +74,7 @@ def init_gspread():
 
 try:
     client = init_gspread()
-    sheet = client.open("Revert case").sheet1
+    sheet = client.open("Case Tracker").sheet1
     connected = True
 except Exception as e:
     connected = False
