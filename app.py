@@ -4,8 +4,9 @@ from google.oauth2.service_account import Credentials
 import time
 from datetime import datetime, timedelta, timezone
 import pandas as pd
+
 # Page Configuration
-st.set_page_config(page_title="CASE LOG", page_icon="⏱️", layout="centered")
+st.set_page_config(page_title="CASE LOG", page_icon="📁", layout="centered")
 
 # Custom CSS for EXACT Original Layout, Banner & FULL RED BUTTON
 st.markdown("""
@@ -74,7 +75,8 @@ def init_gspread():
 
 try:
     client = init_gspread()
-    sheet = client.open("Case Tracker").sheet1
+    # GUNAKAN ID SPREADSHEET DAN NAMA TAB YANG TEPAT
+    sheet = client.open_by_key("19uOA-ylddWlcgvV92O3OyUEY9ekqHyoGXoF5-rslyIM").worksheet("Case Logs")
     connected = True
 except Exception as e:
     connected = False
@@ -103,7 +105,7 @@ if 'completed' not in st.session_state:
 # Original Blue Header Card
 st.markdown("""
     <div class="header-box">
-        <h1>⏱️ CASE LOG</h1>
+        <h1>📁 CASE LOG</h1>
         <p>Start case ➔ Pause (if needed) ➔ Complete case ➔ Log Summary</p>
     </div>
 """, unsafe_allow_html=True)
@@ -114,19 +116,19 @@ if connected:
 # Agent Input Form
 col1, col2 = st.columns(2)
 with col1:
-   agent_list = [
+    agent_list = [
         "- Select Your Name -",
         "Adam", "Aina", "Azwar", "Farhana", "Faris",
         "Hani", "Hidayah", "Jaleel", "Kieshan", "Maisarah",
         "Milah", "Mivan", "Noor", "Syahmi", "Syazana",
         "Venosha"
     ]
-   selected_agent = st.selectbox(
+    selected_agent = st.selectbox(
         "Agent Name",
         agent_list,
         disabled=st.session_state.tracking or st.session_state.completed
     )
-   agent_name = selected_agent if selected_agent != "- Select Your Name -" else ""
+    agent_name = selected_agent if selected_agent != "- Select Your Name -" else ""
 
 with col2:
     case_id = st.text_input("Case ID", placeholder="e.g. 2000", disabled=st.session_state.tracking or st.session_state.completed)
