@@ -6,7 +6,7 @@ from datetime import datetime, timedelta, timezone
 import pandas as pd
 
 # Page Configuration
-st.set_page_config(page_title="CASE LOG", page_icon="📁", layout="centered")
+st.set_page_config(page_title="CASE LOG", page_icon="⏱️", layout="centered")
 
 # Custom CSS for EXACT Original Layout, Banner & FULL RED BUTTON
 st.markdown("""
