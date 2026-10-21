@@ -221,8 +221,6 @@ if st.session_state.completed:
             
             sheet.append_row(row_data)
             
-            # Show Balloons Animation!
-            st.balloons()
             st.success("✅ Saved to Google Sheet successfully!")
             
             # Reset Session State
