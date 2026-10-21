@@ -105,7 +105,7 @@ if 'completed' not in st.session_state:
 # Original Blue Header Card
 st.markdown("""
     <div class="header-box">
-        <h1>📁 CASE LOG</h1>
+        <h1>⏱️ CASE LOG</h1>
         <p>Start case ➔ Pause (if needed) ➔ Complete case ➔ Log Summary</p>
     </div>
 """, unsafe_allow_html=True)
