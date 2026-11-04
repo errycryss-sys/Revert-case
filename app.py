@@ -8,7 +8,18 @@ from datetime import datetime, timedelta, timezone
 # Page Configuration
 st.set_page_config(page_title="CASE LOG", page_icon="⏱️", layout="centered")
 
+# Inject auto cache buster to disable static chunk caching for agents
+st.markdown(
+    """
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    """,
+    unsafe_allow_html=True
+)
+
 # Custom CSS for EXACT Original Layout, Banner & FULL RED BUTTON
+
 st.markdown("""
     <style>
     /* Header Container - Dark Blue Card */
