@@ -142,8 +142,7 @@ with col1:
     agent_name = selected_agent if selected_agent != "- Select Your Name -" else ""
 
 with col2:
-    case_id = st.text_input("Case ID", placeholder="e.g. 2000", disabled=st.session_state.tracking or st.session_state.completed)
-
+case_id = st.text_input("Case ID", placeholder="e.g. 2000", disabled=st.session_state.tracking or st.session_state.completed, key="case_id_input")
 st.markdown("---")
 
 # Controls Section (Start, Pause, Complete)
@@ -239,6 +238,7 @@ if st.session_state.completed:
             st.session_state.paused = False
             st.session_state.completed = False
             st.session_state.total_paused_sec = 0
+            st.session_state.case_id_input =""
             
             # Delay 2.5s for balloons to float before refresh
             time.sleep(2.5)
