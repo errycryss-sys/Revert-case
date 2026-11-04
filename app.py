@@ -19,7 +19,6 @@ st.markdown(
 )
 
 # Custom CSS for EXACT Original Layout, Banner & FULL RED BUTTON
-
 st.markdown("""
     <style>
     /* Header Container - Dark Blue Card */
@@ -143,6 +142,7 @@ with col1:
 
 with col2:
     case_id = st.text_input("Case ID", placeholder="e.g. 2000", disabled=st.session_state.tracking or st.session_state.completed, key="case_id_input")
+
 st.markdown("---")
 
 # Controls Section (Start, Pause, Complete)
@@ -238,7 +238,10 @@ if st.session_state.completed:
             st.session_state.paused = False
             st.session_state.completed = False
             st.session_state.total_paused_sec = 0
-            st.session_state.case_id_input =""
+            
+            # MENGHAPUS KEY SECARA AMAN AGAR FORM TER-RESET DENGAN BERSIH
+            if "case_id_input" in st.session_state:
+                del st.session_state["case_id_input"]
             
             # Delay 2.5s for balloons to float before refresh
             time.sleep(2.5)
