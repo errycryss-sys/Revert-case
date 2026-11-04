@@ -110,6 +110,8 @@ if 'duration_sec' not in st.session_state:
     st.session_state.duration_sec = 0
 if 'completed' not in st.session_state:
     st.session_state.completed = False
+if 'case_reset_counter' not in st.session_state:
+    st.session_state.case_reset_counter = 0
 
 # Original Blue Header Card
 st.markdown("""
@@ -141,11 +143,13 @@ with col1:
     agent_name = selected_agent if selected_agent != "- Select Your Name -" else ""
 
 with col2:
+    # Use dynamic key so Streamlit renders a fresh empty input on submit
+    case_id_key = f"case_id_input_{st.session_state.case_reset_counter}"
     case_id = st.text_input(
         "Case ID", 
         placeholder="e.g. 2000", 
         disabled=st.session_state.tracking or st.session_state.completed, 
-        key="case_id_input"
+        key=case_id_key
     )
 
 st.markdown("---")
@@ -234,15 +238,14 @@ if st.session_state.completed:
             
             sheet.append_row(row_data)
             
-            # Reset tracking states sahaja
+            # Reset tracking states
             st.session_state.tracking = False
             st.session_state.paused = False
             st.session_state.completed = False
             st.session_state.total_paused_sec = 0
             
-            # Padam Case ID sahaja (Agent Name dikekalkan)
-            if "case_id_input" in st.session_state:
-                del st.session_state["case_id_input"]
+            # Increment counter to force Streamlit to instantiate a completely clean Case ID box
+            st.session_state.case_reset_counter += 1
             
             st.rerun()
             
