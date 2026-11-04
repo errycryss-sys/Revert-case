@@ -85,7 +85,6 @@ def init_gspread():
 
 try:
     client = init_gspread()
-    # GUNAKAN ID SPREADSHEET DAN NAMA TAB YANG TEPAT
     sheet = client.open_by_key("19uOA-ylddWlcgvV92O3OyUEY9ekqHyoGXoF5-rslyIM").worksheet("Case Logs")
     connected = True
 except Exception as e:
@@ -112,6 +111,13 @@ if 'duration_sec' not in st.session_state:
 if 'completed' not in st.session_state:
     st.session_state.completed = False
 
+# Callback function untuk reset form input sebelum page rerun
+def reset_form_inputs():
+    if "case_id_input" in st.session_state:
+        del st.session_state["case_id_input"]
+    if "agent_name_select" in st.session_state:
+        st.session_state["agent_name_select"] = "- Select Your Name -"
+
 # Original Blue Header Card
 st.markdown("""
     <div class="header-box">
@@ -136,12 +142,18 @@ with col1:
     selected_agent = st.selectbox(
         "Agent Name",
         agent_list,
-        disabled=st.session_state.tracking or st.session_state.completed
+        disabled=st.session_state.tracking or st.session_state.completed,
+        key="agent_name_select"
     )
     agent_name = selected_agent if selected_agent != "- Select Your Name -" else ""
 
 with col2:
-    case_id = st.text_input("Case ID", placeholder="e.g. 2000", disabled=st.session_state.tracking or st.session_state.completed, key="case_id_input")
+    case_id = st.text_input(
+        "Case ID", 
+        placeholder="e.g. 2000", 
+        disabled=st.session_state.tracking or st.session_state.completed, 
+        key="case_id_input"
+    )
 
 st.markdown("---")
 
@@ -199,7 +211,6 @@ if st.session_state.tracking:
 
 # Completion Details Form (Remarks Only)
 if st.session_state.completed:
-    # Format Duration tanpa saat (Jam:Minit)
     m, _ = divmod(st.session_state.duration_sec, 60)
     h, m = divmod(m, 60)
     formatted_duration = f"{h:02d}:{m:02d}"
@@ -211,14 +222,13 @@ if st.session_state.completed:
         placeholder="Summarize any delays or issues faced (e.g., Hard to validate evidence / Unclear SOP / Complex case / Waiting for seller response / System lag)..."
     )
     
-    # Red Submit Button
-    if st.button("🚀 SUBMIT TO SHEET", type="secondary", use_container_width=True):
+    # Red Submit Button dengan Callback reset_form_inputs
+    if st.button("🚀 SUBMIT TO SHEET", type="secondary", use_container_width=True, on_click=reset_form_inputs):
         try:
             pm, ps = divmod(st.session_state.total_paused_sec, 60)
             ph, pm = divmod(pm, 60)
             formatted_pause = f"{ph:02d}:{pm:02d}:{ps:02d}"
 
-            # Data row ringkas (7 Column)
             row_data = [
                 case_id,
                 agent_name,
@@ -233,18 +243,12 @@ if st.session_state.completed:
             
             st.success("✅ Saved to Google Sheet successfully!")
             
-            # Reset Session State
+            # Reset Tracking States
             st.session_state.tracking = False
             st.session_state.paused = False
             st.session_state.completed = False
             st.session_state.total_paused_sec = 0
             
-            # MENGHAPUS KEY SECARA AMAN AGAR FORM TER-RESET DENGAN BERSIH
-            if "case_id_input" in st.session_state:
-                del st.session_state["case_id_input"]
-            
-            # Delay 2.5s for balloons to float before refresh
-            time.sleep(2.5)
             st.rerun()
             
         except Exception as e:
